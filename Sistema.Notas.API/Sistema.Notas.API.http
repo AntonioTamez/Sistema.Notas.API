@@ -1,0 +1,6 @@
+@Sistema.Notas.API_HostAddress = http://localhost:5178
+
+GET {{Sistema.Notas.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
