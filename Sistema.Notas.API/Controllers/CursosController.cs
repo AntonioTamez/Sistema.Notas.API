@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sistema.Notas.API.Data;
@@ -6,8 +7,10 @@ using Sistema.Notas.API.Models;
 
 namespace Sistema.Notas.API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CursosController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -18,7 +21,7 @@ namespace Sistema.Notas.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Curso>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
         {
             return await _context.Cursos.ToListAsync();
         }

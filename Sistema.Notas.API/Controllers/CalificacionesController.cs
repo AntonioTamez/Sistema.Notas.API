@@ -18,7 +18,7 @@ namespace Sistema.Notas.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Calificacion>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Calificacion>>> GetCalificaciones()
         {
             return await _context.Calificaciones.ToListAsync();
         }
