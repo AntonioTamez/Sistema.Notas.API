@@ -15,6 +15,10 @@ namespace Sistema.Notas.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Usuario>().HasIndex(u => u.Email).IsUnique();
+
+            modelBuilder.Entity<Calificacion>()
+                .Property(c => c.Nota)
+                .HasPrecision(5, 2);
         }
     }
 }
