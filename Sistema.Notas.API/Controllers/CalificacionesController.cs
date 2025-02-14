@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Sistema.Notas.API.Data;
-using Sistema.Notas.API.Models;
+using Sistema.Notas.API.Data; 
+using Sistema.Notas.API.Shared.Entities;
 
 namespace Sistema.Notas.API.Controllers
 {

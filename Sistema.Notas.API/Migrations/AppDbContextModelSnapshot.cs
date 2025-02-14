@@ -21,7 +21,7 @@ namespace Sistema.Notas.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Sistema.Notas.API.Models.Calificacion", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Calificacion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace Sistema.Notas.API.Migrations
                     b.ToTable("Calificaciones");
                 });
 
-            modelBuilder.Entity("Sistema.Notas.API.Models.Curso", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Curso", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace Sistema.Notas.API.Migrations
                     b.ToTable("Cursos");
                 });
 
-            modelBuilder.Entity("Sistema.Notas.API.Models.EstudianteCurso", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.EstudianteCurso", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +82,7 @@ namespace Sistema.Notas.API.Migrations
                     b.ToTable("EstudiantesCursos");
                 });
 
-            modelBuilder.Entity("Sistema.Notas.API.Models.Usuario", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

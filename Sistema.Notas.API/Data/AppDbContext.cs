@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Sistema.Notas.API.Models;
+﻿using Microsoft.EntityFrameworkCore; 
+using Sistema.Notas.API.Shared.Entities;
 
 namespace Sistema.Notas.API.Data
 {

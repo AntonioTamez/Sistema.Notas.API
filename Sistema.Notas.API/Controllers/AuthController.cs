@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sistema.Notas.API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sistema.Notas.API.Services;
+using Sistema.Notas.API.Shared.DTOs;
 
 namespace Sistema.Notas.API.Controllers
 {
