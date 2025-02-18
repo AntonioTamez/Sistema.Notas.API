@@ -21,7 +21,7 @@ namespace Sistema.Notas.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Calificacion", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,22 +29,41 @@ namespace Sistema.Notas.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CursoId")
+                    b.Property<int>("InstructorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstudianteId")
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Grade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Nota")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Value")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Calificaciones");
+                    b.ToTable("Grades");
                 });
 
-            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Curso", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.StudentCourse", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,54 +71,35 @@ namespace Sistema.Notas.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ProfesorId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cursos");
+                    b.ToTable("StudenstCourses");
                 });
 
-            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.EstudianteCurso", b =>
+            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EstudiantesCursos");
-                });
-
-            modelBuilder.Entity("Sistema.Notas.API.Shared.Entities.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ContrasenaHash")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rol")
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("passwordHash")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -108,7 +108,7 @@ namespace Sistema.Notas.API.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

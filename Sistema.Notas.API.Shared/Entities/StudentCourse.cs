@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Sistema.Notas.API.Shared.Entities
 {
-    public class EstudianteCurso
+    public class StudentCourse
     {
         public int Id { get; set; }
-        public int EstudianteId { get; set; }
-        public int CursoId { get; set; }
+        public int StudentId { get; set; }
+        public int CourseId { get; set; }
     }
 }

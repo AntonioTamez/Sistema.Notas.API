@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sistema.Notas.API.Data;
 using Sistema.Notas.API.Repositories.Interfaces;
@@ -8,11 +9,11 @@ namespace Sistema.Notas.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public UsuariosController(IUsuarioRepository usuarioRepository)
+        public UsersController(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }
@@ -29,8 +30,9 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
+        [Authorize]
         [HttpPost("AddUsuarios")]
-        public async Task<IActionResult> AddUsuarios(Usuario usuario)
+        public async Task<IActionResult> AddUsuarios(User usuario)
         {
             var response = await _usuarioRepository.AddAsync(usuario);
             if (response.WasSuccess)
@@ -41,6 +43,31 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
+        [Authorize]
+        [HttpPost("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(User usuario)
+        {
+            var response = await _usuarioRepository.UpdateAsync(usuario);
+            if (response.WasSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return BadRequest();
+
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var response = await _usuarioRepository.DeleteAsync(id);
+            if (response.WasSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return BadRequest();
+
+        }
 
     }
 }

@@ -1,28 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Sistema.Notas.API.Data;
+using Sistema.Notas.API.Data; 
 using Sistema.Notas.API.Shared.Entities;
 
 namespace Sistema.Notas.API.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class CursosController : ControllerBase
+    public class GradesController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public CursosController(AppDbContext context)
+        public GradesController(AppDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Curso>>> GetCursos()
+        public async Task<ActionResult<IEnumerable<Grade>>> GetCalificaciones()
         {
-            return await _context.Cursos.ToListAsync();
+            return await _context.Grades.ToListAsync();
         }
     }
 }

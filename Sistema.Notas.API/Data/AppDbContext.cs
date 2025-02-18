@@ -7,17 +7,17 @@ namespace Sistema.Notas.API.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options) { }
 
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Curso> Cursos { get; set; }
-        public DbSet<EstudianteCurso> EstudiantesCursos { get; set; }
-        public DbSet<Calificacion> Calificaciones { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<StudentCourse> StudenstCourses { get; set; }
+        public DbSet<Grade> Grades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Usuario>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
-            modelBuilder.Entity<Calificacion>()
-                .Property(c => c.Nota)
+            modelBuilder.Entity<Grade>()
+                .Property(c => c.Value)
                 .HasPrecision(5, 2);
         }
     }

@@ -8,10 +8,11 @@ namespace Sistema.Notas.API.Repositories.Interfaces
 {
     public interface IUsuarioRepository
     {
-        Task<ActionResponse<Usuario>> AddAsync(Usuario entity);
-        Task<ActionResponse<Usuario>> GetAsync(int id);
+        Task<ActionResponse<User>> AddAsync(User entity);
+        Task<ActionResponse<User>> DeleteAsync(int id);
+        Task<ActionResponse<User>> GetAsync(int id);
 
-        Task<ActionResponse<IEnumerable<Usuario>>> GetAsync();
-
+        Task<ActionResponse<IEnumerable<User>>> GetAsync();
+        Task<ActionResponse<User>> UpdateAsync(User entity);
     }
 }

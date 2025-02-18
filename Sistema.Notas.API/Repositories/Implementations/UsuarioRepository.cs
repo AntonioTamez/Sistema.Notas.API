@@ -10,36 +10,39 @@ namespace Sistema.Notas.API.Repositories.Implementations
     {
         private readonly AppDbContext _context;
 
+        private readonly DbSet<User> _entity;
+
         public UsuarioRepository(AppDbContext context)
         {
             _context = context;
+            _entity = _context.Set<User>();
         }
 
-        public Task<ActionResponse<Usuario>> GetAsync(int id)
+        public Task<ActionResponse<User>> GetAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ActionResponse<IEnumerable<Usuario>>> GetAsync()
+        public async Task<ActionResponse<IEnumerable<User>>> GetAsync()
         {
-            var usuarios = await _context.Usuarios
-                .OrderBy(x => x.Nombre)
+            var usuarios = await _context.Users
+                .OrderBy(x => x.Name)
                 .ToListAsync();
 
-            return new ActionResponse<IEnumerable<Usuario>>
+            return new ActionResponse<IEnumerable<User>>
             {
                 WasSuccess = true,
                 Result = usuarios
             };
         }
 
-        public async Task<ActionResponse<Usuario>> AddAsync(Usuario entity)
+        public async Task<ActionResponse<User>> AddAsync(User entity)
         {
             _context.Add(entity);
             try
             {
                 await _context.SaveChangesAsync();
-                return new ActionResponse<Usuario>
+                return new ActionResponse<User>
                 {
                     WasSuccess = true,
                     Result = entity
@@ -55,7 +58,7 @@ namespace Sistema.Notas.API.Repositories.Implementations
                     }
                 }
 
-                return new ActionResponse<Usuario>
+                return new ActionResponse<User>
                 {
                     WasSuccess = false,
                     Message = ex.Message
@@ -67,18 +70,83 @@ namespace Sistema.Notas.API.Repositories.Implementations
             }
         }
 
-        private ActionResponse<Usuario> DbUpdateExceptionActionResponse()
+        public async Task<ActionResponse<User>> DeleteAsync(int id)
         {
-            return new ActionResponse<Usuario>
+            var row = await _entity.FindAsync(id);
+            if (row == null)
+            {
+                return new ActionResponse<User>
+                {
+                    WasSuccess = false,
+                    Message = "Data not found"
+                };
+            }
+
+            try
+            {
+                _entity.Remove(row);
+                await _context.SaveChangesAsync();
+                return new ActionResponse<User>
+                {
+                    WasSuccess = true
+                };
+            }
+            catch
+            {
+                return new ActionResponse<User>
+                {
+                    WasSuccess = false,
+                    Message = "No se pude borrar, porque tiene registros relacionados."
+                };
+            }
+        }
+
+        public async Task<ActionResponse<User>> UpdateAsync(User entity)
+        {
+            _context.Update(entity);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new ActionResponse<User>
+                {
+                    WasSuccess = true,
+                    Result = entity
+                };
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    if (ex.InnerException!.Message.Contains("duplicate"))
+                    {
+                        return DbUpdateExceptionActionResponse();
+                    }
+                }
+
+                return new ActionResponse<User>
+                {
+                    WasSuccess = false,
+                    Message = ex.Message
+                };
+            }
+            catch (Exception exception)
+            {
+                return ExceptionActionResponse(exception);
+            }
+        }
+
+        private ActionResponse<User> DbUpdateExceptionActionResponse()
+        {
+            return new ActionResponse<User>
             {
                 WasSuccess = false,
                 Message = "Ya existe el registro que estas intentando crear."
             };
         }
 
-        private ActionResponse<Usuario> ExceptionActionResponse(Exception exception)
+        private ActionResponse<User> ExceptionActionResponse(Exception exception)
         {
-            return new ActionResponse<Usuario>
+            return new ActionResponse<User>
             {
                 WasSuccess = false,
                 Message = exception.Message
