@@ -6,13 +6,13 @@ using Sistema.Notas.API.Shared.Responses;
 
 namespace Sistema.Notas.API.Repositories.Implementations
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
 
         private readonly DbSet<User> _entity;
 
-        public UsuarioRepository(AppDbContext context)
+        public UserRepository(AppDbContext context)
         {
             _context = context;
             _entity = _context.Set<User>();

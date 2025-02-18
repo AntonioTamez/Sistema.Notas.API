@@ -6,7 +6,7 @@ using Sistema.Notas.API.Shared.Responses;
 
 namespace Sistema.Notas.API.Repositories.Interfaces
 {
-    public interface IUsuarioRepository
+    public interface IUserRepository
     {
         Task<ActionResponse<User>> AddAsync(User entity);
         Task<ActionResponse<User>> DeleteAsync(int id);

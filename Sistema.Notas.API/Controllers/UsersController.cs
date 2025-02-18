@@ -11,14 +11,14 @@ namespace Sistema.Notas.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUserRepository _usuarioRepository;
 
-        public UsersController(IUsuarioRepository usuarioRepository)
+        public UsersController(IUserRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }
 
-        [HttpGet("GetUsuarios")]
+        [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsuarios()
         {
             var response = await _usuarioRepository.GetAsync();
@@ -31,7 +31,7 @@ namespace Sistema.Notas.API.Controllers
         }
 
         [Authorize]
-        [HttpPost("AddUsuarios")]
+        [HttpPost("AddUser")]
         public async Task<IActionResult> AddUsuarios(User usuario)
         {
             var response = await _usuarioRepository.AddAsync(usuario);
