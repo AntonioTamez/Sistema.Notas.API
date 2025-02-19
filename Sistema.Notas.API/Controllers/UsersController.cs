@@ -30,7 +30,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost("AddUser")]
         public async Task<IActionResult> AddUsuarios(User usuario)
         {
@@ -43,7 +43,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost("UpdateUser")]
         public async Task<IActionResult> UpdateUser(User usuario)
         {
@@ -56,7 +56,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int id)
         {

@@ -18,7 +18,7 @@ namespace Sistema.Notas.API.Controllers
         {
             _gradeRepository = gradeRepository;
         }
-
+        [Authorize(Roles = "Administrador,Estudiante")]
         [HttpGet("GetGrades")]
         public async Task<IActionResult> GetGrades()
         {
@@ -31,7 +31,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost("AddGrade")]
         public async Task<IActionResult> AddGrade(Grade grade)
         {
@@ -44,7 +44,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost("UpdateGrade")]
         public async Task<IActionResult> UpdateGrade(Grade grade)
         {
@@ -57,7 +57,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("DeleteGrade")]
         public async Task<IActionResult> DeleteGrade(int id)
         {

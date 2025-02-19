@@ -32,7 +32,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost("AddCourse")]
         public async Task<IActionResult> AddCourse(Course course)
         {
@@ -45,7 +45,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost("UpdateCourse")]
         public async Task<IActionResult> UpdateCourse(Course course)
         {
@@ -58,7 +58,7 @@ namespace Sistema.Notas.API.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("DeleteCourse")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
