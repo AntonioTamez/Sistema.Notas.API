@@ -18,7 +18,8 @@ namespace Sistema.Notas.API.Controllers
         {
             _gradeRepository = gradeRepository;
         }
-        [Authorize(Roles = "Administrador,Estudiante")]
+
+        [Authorize(Policy = "onlyStudent")]
         [HttpGet("GetGrades")]
         public async Task<IActionResult> GetGrades()
         {

@@ -35,7 +35,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization(); 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AdminOrStudent", policy => policy.RequireRole("Administrador", "Estudiante"))
+    .AddPolicy("onlyStudent", policy => policy.RequireRole("Estudiante"));
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -52,6 +57,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 
+// Auth Policies
 
 
 // Configurar Swagger con autenticación JWT
