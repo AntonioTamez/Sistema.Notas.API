@@ -12,7 +12,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<LoginResponse>> {
-    const token = this.authService.getToken();
+    const token = this.authService.getTokenFromLocalStorage();
     
     if (token) {
       const cloned = req.clone({
