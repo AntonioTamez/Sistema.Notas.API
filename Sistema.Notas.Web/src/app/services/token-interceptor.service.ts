@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { LoginResponse } from '../models/loginResponse.Interface';
 
-//@Injectable()
+@Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
 
-  private authService = inject(AuthService);
+  //private authService = inject(AuthService);
   
-  //constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<LoginResponse>> {
     const token = this.authService.getToken();
