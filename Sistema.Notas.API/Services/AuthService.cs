@@ -23,12 +23,12 @@ namespace Sistema.Notas.API.Services
         }
 
         // Simulación de usuarios en memoria (puedes cambiar esto a una BD)
-        private readonly Dictionary<string, (string Password, string Role)> _users =
-            new Dictionary<string, (string, string)>
+        private readonly Dictionary<string, (string Password, string Role, string Name)> _users =
+            new Dictionary<string, (string, string, string)>
             {
-                { "admin", ("admin123", "Administrador") },
-                { "profesor1", ("profesor123", "Profesor") },
-                { "estudiante1", ("estudiante123", "Estudiante") }
+                { "admin", ("admin123", "Administrador", "Angelica Sanchez") },
+                { "profesor1", ("profesor123", "Profesor", "Pedro Castañeda") },
+                { "estudiante1", ("estudiante123", "Estudiante", "Maria Rios") }
             };
 
         public bool ValidateUser(string username, string password, out string role)
@@ -55,8 +55,8 @@ namespace Sistema.Notas.API.Services
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, role)
+                new Claim("name", username),
+                new Claim("role", role)
             };
 
             var token = new JwtSecurityToken(

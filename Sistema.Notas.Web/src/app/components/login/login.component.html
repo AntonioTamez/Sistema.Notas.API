@@ -5,20 +5,41 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" class="form-control" formControlName="username" required>
+          <input type="text" id="username" class="form-control" formControlName="username" required (input)="trimInput('username')">
           <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="text-danger">
             Username is required
           </div>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" class="form-control" formControlName="password" required>
+          <input type="password" id="password" class="form-control" formControlName="password" required (input)="trimInput('password')">
           <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
             Password is required
           </div>
         </div>
         <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
       </form>
+      <div class="mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Usuarios de Prueba</h5>
+            <p class="card-text">
+              <strong>Administrador</strong>
+              <br>
+              Usuario: <code>admin</code>  Password: <code>admin123</code>
+            </p>
+            <p class="card-text">
+              <strong>Instructor</strong>
+              <br>
+              Usuario: <code>profesor1</code>  Password: <code>profesor123</code>
+            </p>
+            <p class="card-text">
+              <strong>Estudiante</strong>
+              <br>
+              Usuario: <code>estudiante1</code>  Password: <code>estudiante123</code>
+            </p>            
+          </div>
+        </div>      
     </div>
   </div>
 </div>

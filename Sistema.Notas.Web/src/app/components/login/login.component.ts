@@ -1,20 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CursosService } from '../../services/cursos.service';
 import { AuthService } from '../../services/auth.service';
+import { Router, RouterModule } from '@angular/router'; 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports:[CommonModule, ReactiveFormsModule],
+  imports:[CommonModule, ReactiveFormsModule, RouterModule],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   loginForm: FormGroup;
   token: string = "";
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -24,21 +25,22 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log('Form Submitted', this.loginForm.value);
+    if (this.loginForm.valid) { 
 
       const username = this.loginForm.value.username;
-      const password = this.loginForm.value.password;
-
-      
-      console.log('Form Submitted', username, password);
+      const password = this.loginForm.value.password; 
 
       this.authService.getToken(username, password).subscribe(
         token => {          
-          this.token = token; // Almacena el token en la variable
-          localStorage.setItem('token', token); // Opcional: Almacena el token en el localStorage
-          console.log('Token:', token); // Opcional: Imprime el token en la consola
-          // Redirigir o realizar otras acciones después de obtener el token
+          this.token = token;
+          localStorage.setItem('token', token); 
+
+          const decodedToken = this.decodeToken(token);
+          const userRole = decodedToken.role; 
+
+          console.log("el rol es: ", userRole);
+           
+          this.router.navigate(['/dashboard']);
         },
         error => {
           console.error('Error al obtener el token', error);
@@ -48,4 +50,18 @@ export class LoginComponent implements OnInit {
 
     
   }
+
+  trimInput(controlName: string) {
+    const control = this.loginForm.get(controlName);
+    if (control) {
+      control.setValue(control.value.trim());
+    }
+  }
+
+  private decodeToken(token: string): any {
+    const payload = token.split('.')[1];
+    const decodedPayload = atob(payload); 
+    return JSON.parse(decodedPayload);
+  }
+
 }
