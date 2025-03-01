@@ -9,8 +9,8 @@ namespace Sistema.Notas.API.Services
 
     public interface IAuthService
     {
-        string GenerateJwtToken(string username, string role);
-        bool ValidateUser(string username, string password, out string role);
+        string GenerateJwtToken(string username, string role, string name);
+        bool ValidateUser(string username, string password, out string role, out string name);
     }
 
     public class AuthService : IAuthService
@@ -27,22 +27,25 @@ namespace Sistema.Notas.API.Services
             new Dictionary<string, (string, string, string)>
             {
                 { "admin", ("admin123", "Administrador", "Angelica Sanchez") },
-                { "profesor1", ("profesor123", "Profesor", "Pedro Castañeda") },
+                { "profesor1", ("profesor123", "Profesor", "Pedro Lozano") },
                 { "estudiante1", ("estudiante123", "Estudiante", "Maria Rios") }
             };
 
-        public bool ValidateUser(string username, string password, out string role)
+        public bool ValidateUser(string username, string password, out string role, out string name)
         {
             role = string.Empty;
+            name = string.Empty;
+
             if (_users.TryGetValue(username, out var userInfo) && userInfo.Password == password)
             {
                 role = userInfo.Role;
+                name = userInfo.Name;
                 return true;
             }
             return false;
         }
 
-        public string GenerateJwtToken(string username, string role)
+        public string GenerateJwtToken(string username, string role, string name)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
@@ -55,8 +58,9 @@ namespace Sistema.Notas.API.Services
 
             var claims = new List<Claim>
             {
-                new Claim("name", username),
-                new Claim("role", role)
+                new Claim("username", username),
+                new Claim("role", role),
+                new Claim("name", name)
             };
 
             var token = new JwtSecurityToken(

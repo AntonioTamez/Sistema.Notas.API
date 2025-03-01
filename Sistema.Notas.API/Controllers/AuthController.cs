@@ -21,9 +21,9 @@ namespace Sistema.Notas.API.Controllers
             if (string.IsNullOrWhiteSpace(userDto.Username) || string.IsNullOrWhiteSpace(userDto.Password))
                 return BadRequest("Usuario y contraseña requeridos.");
 
-            if (_authService.ValidateUser(userDto.Username, userDto.Password, out string role))
+            if (_authService.ValidateUser(userDto.Username, userDto.Password, out string role, out string name))
             {
-                var token = _authService.GenerateJwtToken(userDto.Username, role);
+                var token = _authService.GenerateJwtToken(userDto.Username, role, name);
                 return Ok(new { Token = token });
             }
 

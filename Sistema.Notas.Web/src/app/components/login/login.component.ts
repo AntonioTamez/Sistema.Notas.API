@@ -36,9 +36,14 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', token); 
 
           const decodedToken = this.decodeToken(token);
+
+          const username = decodedToken.username; 
           const userRole = decodedToken.role; 
+          const name = decodedToken.name; 
 
           console.log("el rol es: ", userRole);
+          console.log("el name es: ", name);
+          console.log("el username es: ", username);
            
           this.router.navigate(['/dashboard']);
         },
